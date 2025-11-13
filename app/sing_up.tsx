@@ -4,13 +4,13 @@ import { useRouter } from "expo-router";
 import "expo-sqlite/localStorage/install";
 import React, { useState } from "react";
 import {
-    ActivityIndicator,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -66,7 +66,7 @@ const PhoneSingUpUI = () => {
 
   async function signUpWithEmail() {
     const { error } = await supabase.auth.signUp({
-      email: email,
+      email: email.trim(),
       password: password,
       options: {
         data: {
@@ -118,36 +118,45 @@ const PhoneSingUpUI = () => {
     const strongRegex = new RegExp(
       "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
     );
-
-    if (!strongRegex.test(email)) {
-      console.log("email is not valid");
-      showSnackbar("Email geçerli değil!", {
+    if (email.trim() === "" || password === "" || userName === "") {
+      showSnackbar("Lütfen tüm alanları doldurunuz!", {
         position: "top",
         backgroundColor: "#D32F2F",
         icon: <Text>⚠️</Text>,
-        buttonText: "TAMAM",
-        onButtonPress: () =>
-          setSnackbar((prev) => ({ ...prev, visible: false })),
       });
       setIsLoad(false);
       return false;
-    } else if (password.length < 8) {
-      console.log("password is not valid");
-      showSnackbar("Şifre en az 8 karakter olmalı!", {
-        position: "top",
-        backgroundColor: "#D32F2F",
-        icon: <Text>⚠️</Text>,
-        buttonText: "TAMAM",
-        onButtonPress: () =>
-          setSnackbar((prev) => ({ ...prev, visible: false })),
-      });
-      setIsLoad(false);
-      return false;
-    }
-    try {
-      signUpWithEmail();
-    } catch (e) {
-      console.log(e);
+    } else {
+      if (!strongRegex.test(email.trim())) {
+        console.log("email is not valid");
+        showSnackbar("Email geçerli değil!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+          buttonText: "TAMAM",
+          onButtonPress: () =>
+            setSnackbar((prev) => ({ ...prev, visible: false })),
+        });
+        setIsLoad(false);
+        return false;
+      } else if (password.length < 8) {
+        console.log("password is not valid");
+        showSnackbar("Şifre en az 8 karakter olmalı!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+          buttonText: "TAMAM",
+          onButtonPress: () =>
+            setSnackbar((prev) => ({ ...prev, visible: false })),
+        });
+        setIsLoad(false);
+        return false;
+      }
+      try {
+        signUpWithEmail();
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -170,17 +179,17 @@ const PhoneSingUpUI = () => {
             doloribus corporis temporibus sapiente.
           </Text>
           <TextInput
-            className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
             placeholder="@Kullanıcı Adı"
             placeholderTextColor="#56585D"
-            returnKeyType='next'
-            onChange={() => {
+            returnKeyType="next"
+            onChangeText={(userName) => {
               chechUsernameIsAvailable();
               setUserName(userName);
             }}
           />
           <TextInput
-            className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
             placeholder="E-posta"
             placeholderTextColor="#56585D"
             keyboardType="email-address"
@@ -188,7 +197,7 @@ const PhoneSingUpUI = () => {
             onChangeText={(email) => setEmail(email)}
           />
           <TextInput
-            className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
             placeholder="Şifre"
             placeholderTextColor="#56585D"
             secureTextEntry={true}
@@ -229,15 +238,15 @@ const PhoneSingUpUI = () => {
               Hesap Oluştur
             </Text>
           </TouchableOpacity>
-          <View className="w-full justify-center items-center">
-            <Text className="text-muted font-normal text-base justify-center items-center">
-              Zaten bir hesabınız var mı?{" "}
-              <TouchableOpacity onPress={() => router.push("/login")}>
-                <Text className="text-border font-semibold text-base">
-                  Giriş Yapın
-                </Text>
-              </TouchableOpacity>
+          <View className="flex-row justify-center items-center">
+            <Text className="text-muted font-normal text-base">
+              Zaten hesabınız var mı?{" "}
             </Text>
+            <TouchableOpacity onPress={() => router.push("/login")}>
+              <Text className="text-border font-semibold text-base">
+                Giriş Yapın
+              </Text>
+            </TouchableOpacity>
           </View>
           <Snackbar
             visible={snackbar.visible}
@@ -295,7 +304,7 @@ const TabletSingUpUI = () => {
 
   async function signUpWithEmail() {
     const { error } = await supabase.auth.signUp({
-      email: email,
+      email: email.trim(),
       password: password,
       options: {
         data: {
@@ -347,36 +356,45 @@ const TabletSingUpUI = () => {
     const strongRegex = new RegExp(
       "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
     );
-
-    if (!strongRegex.test(email)) {
-      console.log("email is not valid");
-      showSnackbar("Email geçerli değil!", {
+    if (email.trim() === "" || password === "" || userName === "") {
+      showSnackbar("Lütfen tüm alanları doldurunuz!", {
         position: "top",
         backgroundColor: "#D32F2F",
         icon: <Text>⚠️</Text>,
-        buttonText: "TAMAM",
-        onButtonPress: () =>
-          setSnackbar((prev) => ({ ...prev, visible: false })),
       });
       setIsLoad(false);
       return false;
-    } else if (password.length < 8) {
-      console.log("password is not valid");
-      showSnackbar("Şifre en az 8 karakter olmalı!", {
-        position: "top",
-        backgroundColor: "#D32F2F",
-        icon: <Text>⚠️</Text>,
-        buttonText: "TAMAM",
-        onButtonPress: () =>
-          setSnackbar((prev) => ({ ...prev, visible: false })),
-      });
-      setIsLoad(false);
-      return false;
-    }
-    try {
-      signUpWithEmail();
-    } catch (e) {
-      console.log(e);
+    } else {
+      if (!strongRegex.test(email)) {
+        console.log("email is not valid");
+        showSnackbar("Email geçerli değil!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+          buttonText: "TAMAM",
+          onButtonPress: () =>
+            setSnackbar((prev) => ({ ...prev, visible: false })),
+        });
+        setIsLoad(false);
+        return false;
+      } else if (password.length < 8) {
+        console.log("password is not valid");
+        showSnackbar("Şifre en az 8 karakter olmalı!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+          buttonText: "TAMAM",
+          onButtonPress: () =>
+            setSnackbar((prev) => ({ ...prev, visible: false })),
+        });
+        setIsLoad(false);
+        return false;
+      }
+      try {
+        signUpWithEmail();
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -396,7 +414,7 @@ const TabletSingUpUI = () => {
           veritatis ipsa commodi voluptate necessitatibus quidem.{" "}
         </Text>
         <TextInput
-          className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+          className="w-full bg-border px-4 py-6 text-text rounded-lg mb-4"
           placeholder="@Kullanıcı Adı"
           placeholderTextColor="#56585D"
           onChangeText={(userName) => {
@@ -406,7 +424,7 @@ const TabletSingUpUI = () => {
           returnKeyType="next"
         ></TextInput>
         <TextInput
-          className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
           placeholder="E-posta"
           placeholderTextColor="#56585D"
           keyboardType="email-address"
@@ -414,7 +432,7 @@ const TabletSingUpUI = () => {
           returnKeyType="next"
         ></TextInput>
         <TextInput
-          className="w-full bg-border px-4 py-6 rounded-lg mb-4"
+          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
           placeholder="Şifre"
           placeholderTextColor="#56585D"
           secureTextEntry={true}
