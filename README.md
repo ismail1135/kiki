@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+## 📚 Kiki - Fandom Character Journal
+> Your personal notebook for fictional characters. Discover your characters, customize their pages, build your collection.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<h3>✨Features</h3>
 
-## Get started
+* <h4>🎭Character Profiles</h4> - Create detailed page's for your favorite character.
+* <h4>🧑‍🎨Personal Notbooks</h4> - Arrange your characters according to themes.
+* <h4>🖌️Aesthetic Customization</h4> - Design your page like what you want.
+* <h4>🔐Privacy Control</h4> - Share your notebooks either privately or on display.
 
-1. Install dependencies
+<h3>🚀Roadmap</h3>
 
-   ```bash
-   npm install
-   ```
+- [x] Auth
+- [ ] Add Notebook and Edit
+- [ ] Notebook Manage
+- [ ] Aesthetic Customation Tools
+- [ ] Cloud Sync
 
-2. Start the app
+<h3>🔨Technologies</h3>
 
-   ```bash
-   npx expo start
-   ```
+* React-Native
+* Expo
 
-In the output, you'll find options to open the app in a
+<h3>📸Screenshots</h3>
+...
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<h3>💭Why This Project?</h3>
+<p>A platform where fandom enthusiasts can write as many pages as they want about why they love their characters, their favorite aspects... or conversely, why they dislike a character, customize their content, and visit other people's libraries.</p>
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+<h3>🤝Thanks and Contributors</h3>
 
-## Get a fresh project
+* <p>Thank you kiki 🐈‍⬛</p>
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<p>It's my first solo project! Your feedback is very valuable to me.</p>
