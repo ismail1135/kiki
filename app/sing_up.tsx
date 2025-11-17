@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 
+import { Eye, EyeSlash } from "iconsax-react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../lib/supabaseClient";
@@ -37,6 +38,7 @@ const PhoneSingUpUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoad, setIsLoad] = useState(false);
+  const [secure, setSecure] = useState(false);
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     visible: false,
     message: "",
@@ -178,32 +180,58 @@ const PhoneSingUpUI = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
             doloribus corporis temporibus sapiente.
           </Text>
-          <TextInput
-            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-            placeholder="@Kullanıcı Adı"
-            placeholderTextColor="#56585D"
-            returnKeyType="next"
-            onChangeText={(userName) => {
-              chechUsernameIsAvailable();
-              setUserName(userName);
-            }}
-          />
-          <TextInput
-            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-            placeholder="E-posta"
-            placeholderTextColor="#56585D"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onChangeText={(email) => setEmail(email)}
-          />
-          <TextInput
-            className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-            placeholder="Şifre"
-            placeholderTextColor="#56585D"
-            secureTextEntry={true}
-            returnKeyType="done"
-            onChangeText={(password) => setPassword(password)}
-          />
+          <View
+            className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+            style={{ paddingVertical: 24 }}
+          >
+            <TextInput
+              className="w-full text-text"
+              placeholder="@Kullanıcı Adı"
+              placeholderTextColor="#56585D"
+              autoCapitalize="none"
+              onChangeText={(userName) => {
+                setUserName(userName);
+                chechUsernameIsAvailable();
+              }}
+              returnKeyType="next"
+            ></TextInput>
+          </View>
+          <View
+            className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+            style={{ paddingVertical: 24 }}
+          >
+            <TextInput
+              className="flex-1 text-text"
+              placeholder="E-posta"
+              placeholderTextColor="#56585D"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              onChangeText={(email) => setEmail(email)}
+              returnKeyType="next"
+            />
+          </View>
+
+          <View
+            className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+            style={{ paddingVertical: 24 }}
+          >
+            <TextInput
+              className="flex-1 text-text"
+              placeholder="Şifre"
+              placeholderTextColor="#56585D"
+              autoCapitalize="none"
+              secureTextEntry={secure}
+              onChangeText={(password) => setPassword(password)}
+              returnKeyType="done"
+            />
+            <TouchableOpacity onPress={() => setSecure(!secure)}>
+              {secure === true ? (
+                <EyeSlash size={20} color="#56585D" />
+              ) : (
+                <Eye size={20} color="#56585D" />
+              )}
+            </TouchableOpacity>
+          </View>
           <View className="mb-4 flex-row items-center justify-start">
             <Checkbox
               value={isChecked}
@@ -275,6 +303,7 @@ const TabletSingUpUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoad, setIsLoad] = useState(false);
+  const [secure, setSecure] = useState(false);
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     visible: false,
     message: "",
@@ -413,32 +442,58 @@ const TabletSingUpUI = () => {
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea quae
           veritatis ipsa commodi voluptate necessitatibus quidem.{" "}
         </Text>
-        <TextInput
-          className="w-full bg-border px-4 py-6 text-text rounded-lg mb-4"
-          placeholder="@Kullanıcı Adı"
-          placeholderTextColor="#56585D"
-          onChangeText={(userName) => {
-            setUserName(userName);
-            chechUsernameIsAvailable();
-          }}
-          returnKeyType="next"
-        ></TextInput>
-        <TextInput
-          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-          placeholder="E-posta"
-          placeholderTextColor="#56585D"
-          keyboardType="email-address"
-          onChangeText={(email) => setEmail(email)}
-          returnKeyType="next"
-        ></TextInput>
-        <TextInput
-          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-          placeholder="Şifre"
-          placeholderTextColor="#56585D"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-          returnKeyType="done"
-        ></TextInput>
+        <View
+          className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+          style={{ paddingVertical: 24 }}
+        >
+          <TextInput
+            className="w-full text-text"
+            placeholder="@Kullanıcı Adı"
+            placeholderTextColor="#56585D"
+            autoCapitalize="none"
+            onChangeText={(userName) => {
+              setUserName(userName);
+              chechUsernameIsAvailable();
+            }}
+            returnKeyType="next"
+          ></TextInput>
+        </View>
+        <View
+          className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+          style={{ paddingVertical: 24 }}
+        >
+          <TextInput
+            className="flex-1 text-text"
+            placeholder="E-posta"
+            placeholderTextColor="#56585D"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            onChangeText={(email) => setEmail(email)}
+            returnKeyType="next"
+          />
+        </View>
+
+        <View
+          className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+          style={{ paddingVertical: 24 }}
+        >
+          <TextInput
+            className="flex-1 text-text"
+            placeholder="Şifre"
+            placeholderTextColor="#56585D"
+            autoCapitalize="none"
+            secureTextEntry={secure}
+            onChangeText={(password) => setPassword(password)}
+            returnKeyType="done"
+          />
+          <TouchableOpacity onPress={() => setSecure(!secure)}>
+            {secure === true ? (
+              <EyeSlash size={20} color="#56585D" />
+            ) : (
+              <Eye size={20} color="#56585D" />
+            )}
+          </TouchableOpacity>
+        </View>
 
         <View className="mb-4 flex-row items-center justify-start">
           <Checkbox

@@ -24,7 +24,7 @@ interface StudioItems {
   color: string;
   title: string;
   description?: string;
-}
+} 
 
 const studioItems: StudioItems[] = [
   {
@@ -57,7 +57,7 @@ const Phone_studio = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#F3F3F3] p-4">
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      <View className="w-full bg-white py-3 rounded-3xl">
+      <View className="w-full py-3 bg-white rounded-3xl">
         <FlatList
           data={studioItems}
           keyExtractor={(item) => item.id.toString()}
@@ -74,7 +74,7 @@ const Phone_studio = () => {
                   Platform.OS === "ios" && { backgroundColor: "#e0e0e0" },
               ]}
             >
-              <View className="flex-row justify-between items-center py-3 px-4 mb-4 rounded-3xl bg-white ">
+              <View className="flex-row items-center justify-between px-4 py-3 mb-4 bg-white rounded-3xl ">
                 <View
                   className="p-2"
                   style={{ backgroundColor: item.color, borderRadius: 10 }}
@@ -99,10 +99,10 @@ const Phone_studio = () => {
 const Tablet_studio = () => {
   return (
     <SafeAreaView className="flex-1 flex-row bg-[#F3F3F3] p-4">
-      <View className="w-4/6 justify-center items-center">
-      <Text className="text-center text-base font-normal text-text">Düzenlemek için yandaki menüden seçim yapınız.</Text>
+      <View className="items-center justify-center w-4/6">
+      <Text className="text-base font-normal text-center text-text">Düzenlemek için yandaki menüden seçim yapınız.</Text>
       </View>
-      <View className="w-2/6 bg-white rounded-3xl px-3 overflow-hidden">
+      <View className="w-2/6 px-3 overflow-hidden bg-white rounded-3xl">
         <FlatList
           data={studioItems}
           keyExtractor={(item) => item.id.toString()}
@@ -115,7 +115,7 @@ const Tablet_studio = () => {
               }}
               style={({ pressed }) => [styles.listItem]}
             >
-              <View className="flex-row justify-between items-center py-3 px-4 mb-4 rounded-3xl bg-white ">
+              <View className="flex-row items-center justify-between px-4 py-3 mb-4 bg-white rounded-3xl ">
                 <View
                   className="p-2"
                   style={{ backgroundColor: item.color, borderRadius: 10 }}

@@ -1,6 +1,7 @@
 import Snackbar from "@/componet/snack-bar";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "expo-router";
+import { Eye, EyeSlash } from "iconsax-react-native";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -32,6 +33,7 @@ const PhoneLoginhUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoad, setIsLoad] = useState(false);
+  const [secure, setSecure] = useState(true);
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     visible: false,
     message: "",
@@ -66,6 +68,13 @@ const PhoneLoginhUI = () => {
     });
     if (error) {
       console.log(error);
+      if (error.message === "Invalid login credentials") {
+        showSnackbar("E-posta veya şifre hatalı!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+        });
+      }
       setIsLoad(false);
       return;
     } else {
@@ -131,10 +140,7 @@ const PhoneLoginhUI = () => {
 
   return (
     <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#ffffff"
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#ffffff" />
       <SafeAreaView className="flex-1 bg-background">
         <KeyboardAwareScrollView
           enableOnAndroid
@@ -152,22 +158,38 @@ const PhoneLoginhUI = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
               doloribus corporis temporibus sapiente.
             </Text>
-            <TextInput
-              className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-              placeholder="E-posta"
-              placeholderTextColor="#56585D"
-              keyboardType="email-address"
-              onChangeText={(email) => setEmail(email)}
-              returnKeyType="next"
-            />
-            <TextInput
-              className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-              placeholder="Şifre"
-              placeholderTextColor="#56585D"
-              secureTextEntry={true}
-              onChangeText={(password) => setPassword(password)}
-              returnKeyType="done"
-            />
+            <View
+              className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+              style={{ paddingVertical: 24 }}
+            >
+              <TextInput
+                className="flex-1 text-text"
+                placeholder="E-posta"
+                placeholderTextColor="#56585D"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onChangeText={(email) => setEmail(email)}
+                returnKeyType="next"
+              />
+            </View>
+
+            <View
+              className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+              style={{ paddingVertical: 24 }}
+            >
+              <TextInput
+                className="flex-1 text-text"
+                placeholder="Şifre"
+                placeholderTextColor="#56585D"
+                autoCapitalize="none"
+                secureTextEntry={secure}
+                onChangeText={(password) => setPassword(password)}
+                returnKeyType="done"
+              />
+              <TouchableOpacity onPress={() => setSecure(!secure)}>
+                <Eye size={20} color="#56585D" />
+              </TouchableOpacity>
+            </View>
             <View className="w-full justify-center items-end">
               <TouchableOpacity
                 className="mb-4"
@@ -225,6 +247,7 @@ const TabletLoginUI = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoad, setIsLoad] = useState(false);
+  const [secure, setSecure] = useState(true);
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     visible: false,
     message: "",
@@ -259,6 +282,13 @@ const TabletLoginUI = () => {
     });
     if (error) {
       console.log(error);
+      if (error.message === "Invalid login credentials") {
+        showSnackbar("E-posta veya şifre hatalı!", {
+          position: "top",
+          backgroundColor: "#D32F2F",
+          icon: <Text>⚠️</Text>,
+        });
+      }
       setIsLoad(false);
       return;
     } else {
@@ -340,24 +370,42 @@ const TabletLoginUI = () => {
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea quae
           veritatis ipsa commodi voluptate necessitatibus quidem.{" "}
         </Text>
-        <TextInput
-          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-          placeholder="E-posta"
-          keyboardType="email-address"
-          placeholderTextColor="#56585D"
-          value={email}
-          onChangeText={(email) => setEmail(email)}
-          returnKeyType="next"
-        />
-        <TextInput
-          className="w-full bg-border text-text px-4 py-6 rounded-lg mb-4"
-          placeholder="Şifre"
-          secureTextEntry={true}
-          placeholderTextColor="#56585D"
-          value={password}
-          onChangeText={(password) => setPassword(password)}
-          returnKeyType="done"
-        />
+        <View
+          className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+          style={{ paddingVertical: 24 }}
+        >
+          <TextInput
+            className="flex-1 text-text"
+            placeholder="E-posta"
+            placeholderTextColor="#56585D"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            onChangeText={(email) => setEmail(email)}
+            returnKeyType="next"
+          />
+        </View>
+
+        <View
+          className="w-full bg-border rounded-lg flex-row items-center px-4 mb-4"
+          style={{ paddingVertical: 24 }}
+        >
+          <TextInput
+            className="flex-1 text-text"
+            placeholder="Şifre"
+            placeholderTextColor="#56585D"
+            autoCapitalize="none"
+            secureTextEntry={secure}
+            onChangeText={(password) => setPassword(password)}
+            returnKeyType="done"
+          />
+          <TouchableOpacity onPress={() => setSecure(!secure)}>
+            {secure === true ? (
+              <Eye size={20} color="#56585D" />
+            ) : (
+              <EyeSlash size={20} color="#56585D" />
+            )}
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           className="w-full bg-primary p-5 rounded-2xl"
           onPress={() => signIn()}

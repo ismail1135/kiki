@@ -2,7 +2,8 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Dimensions,
-  Image,
+  ImageBackground,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -30,11 +31,7 @@ interface ShelfCellProps {
   onPress: (row: number, col: number) => void;
 }
 
-const { width } = Dimensions.get("window");
-const ROWS = 4; // Satır sayısı
-const COLS = 4; // Sütun sayısı
-const SHELF_WIDTH = width;
-const SHELF_HEIGHT = (width / COLS) * ROWS; // Oran korunuyor
+const { width, height } = Dimensions.get("window");
 
 const SAMPLE_BOOKS: Book[] = [
   { id: 1, title: "Suç ve Ceza", color: "#8B4513", author: "Dostoyevski" },
@@ -104,104 +101,165 @@ const ShelfCell: React.FC<ShelfCellProps> = ({ row, col, books, onPress }) => {
 
 const Home = () => {
   const router = useRouter();
-  const [dialogVisible, setDialogVisible] = useState(false);
-
   const [books, setBooks] = useState<Book[]>([
     { ...SAMPLE_BOOKS[0], cellId: "0-0" },
     { ...SAMPLE_BOOKS[1], cellId: "0-0" },
     { ...SAMPLE_BOOKS[2], cellId: "1-1" },
     { ...SAMPLE_BOOKS[3], cellId: "2-0" },
     { ...SAMPLE_BOOKS[4], cellId: "2-2" },
+    { ...SAMPLE_BOOKS[0], cellId: "0-1" },
+    { ...SAMPLE_BOOKS[1], cellId: "1-0" },
+    { ...SAMPLE_BOOKS[2], cellId: "1-2" },
+    { ...SAMPLE_BOOKS[3], cellId: "2-1" },
+    { ...SAMPLE_BOOKS[4], cellId: "2-2" },
   ]);
 
   const handleCellPress = (row: number, col: number): void => {
     const cellId = `${row}-${col}`;
     console.log(`Hücre seçildi: Satır ${row + 1}, Sütun ${col + 1}`);
-
-    // Kitap ekleme/silme mantığını buraya ekleyebilirsiniz
-    // Örnek: Modal açma, navigasyon vs.
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-
-      <Image
-        source={require("../assets/images/dk.jpeg")}
-        style={{
-          width: "100%",
-          position: "absolute",
-          zIndex:-9999
-        }}
-      />
-      <View style={{
-        width:'20%',
-        height:'7%',
-        backgroundColor:'red',
-        position:'absolute',
-        top:'13%',
-        right:'5%'
-      }}></View>
-      <View style={{
-        width:'30%',
-        height:'25%',
-        backgroundColor:'red',
-        position:'absolute',
-        top:'13%',
-        left:'5%'
-      }}></View>
-      <View style={styles.shelfContainer}>
-        {/* Kallax çerçevesi */}
-        <View style={styles.frame}>
-          <View style={styles.frameTop} />
-          <View style={styles.frameLeft} />
-          <View style={styles.frameRight} />
-          <View style={styles.frameBottom} />
+    <ImageBackground
+      source={require("../assets/images/dk.jpeg")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Duvar Çerçevesi */}
+        <View style={styles.wallFrameContainer}>
+          <Pressable onPress={()=> router.push('/studio')}>
+            <View style={styles.wallFrame}>{/* Çerçeve içeriği */}</View>
+          </Pressable>
         </View>
 
-        {/* 3x3 Grid */}
-        <View style={styles.grid}>
-          {[0, 1, 2].map((row: number) => (
-            <View key={row} style={styles.row}>
-              {[0, 1, 2].map((col: number) => (
-                <ShelfCell
-                  key={`${row}-${col}`}
-                  row={row}
-                  col={col}
-                  books={books}
-                  onPress={handleCellPress}
-                />
-              ))}
+        {/* Ana Layout Container */}
+        <View style={styles.mainLayout}>
+          {/* Kallax Kitaplık */}
+          <View style={styles.shelfWrapper}>
+            <View style={styles.shelfContainer}>
+              {/* Kallax çerçevesi */}
+              <View style={styles.frame}>
+                <View style={styles.frameTop} />
+                <View style={styles.frameLeft} />
+                <View style={styles.frameRight} />
+                <View style={styles.frameBottom} />
+              </View>
+
+              {/* 3x3 Grid */}
+              <View style={styles.grid}>
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((row: number) => (
+                  <View key={row} style={styles.row}>
+                    {[0, 1, 2].map((col: number) => (
+                      <ShelfCell
+                        key={`${row}-${col}`}
+                        row={row}
+                        col={col}
+                        books={books}
+                        onPress={handleCellPress}
+                      />
+                    ))}
+                  </View>
+                ))}
+              </View>
             </View>
-          ))}
+          </View>
+
+          {/* Tip Box - Kallax'ın hemen üstünde */}
+          <View style={styles.tipBoxContainer}>
+            <View style={styles.tipBox}>
+              <Text style={styles.tipText}>💡 İpucu</Text>
+            </View>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
   },
-  content: {
-    paddingVertical: 20,
+  scrollContent: {
+    flexGrow: 1,
+    paddingTop: height * 0.05, // Ekranın %5'i kadar üstten başla
+  },
+
+  // Duvar Çerçevesi
+  wallFrameContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: height * 0.04, // Kallax ile arası ferah olsun
+  },
+  wallFrame: {
+    width: width * 0.2, // Ekran genişliğinin %85'i
+    aspectRatio: 2 / 3, // Sabit oran (genişlik/yükseklik)
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+
+  // Ana Layout
+  mainLayout: {
+    width: "100%",
     alignItems: "center",
   },
-  header: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#2C3E50",
-    marginBottom: 20,
-    textAlign: "center",
+
+  // Tip Box Container
+  tipBoxContainer: {
+    width: "100%",
+    alignItems: "flex-end",
+    paddingHorizontal: width * 0.05, // Ekranın %5'i kadar padding
+    marginTop: -20, // Kallax'a yapışık olsun
+    zIndex: 10,
+  },
+  tipBox: {
+    width: width * 0.25, // Ekran genişliğinin %35'i
+    aspectRatio: 6 / 2, // Genişliğin yarısı kadar yükseklik
+    backgroundColor: "rgba(255, 59, 48, 0.9)",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  tipText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  // Kallax Kitaplık
+  shelfWrapper: {
+    width: "100%",
+    alignItems: "center",
+    paddingHorizontal: width * 0.0,
   },
   shelfContainer: {
-    width: SHELF_WIDTH,
-    height: SHELF_HEIGHT,
+    width: "300%",
+    aspectRatio: 1, // Kare şeklinde
+    maxWidth: "100%",
     position: "relative",
-    marginTop:'40%'
   },
 
   // Kallax Çerçevesi
@@ -277,7 +335,6 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     margin: 0,
-    // eğer arkası kapansın istersem bg eklemem gren buraya
     borderRadius: 0,
     borderColor: "#E8E8E8",
     borderWidth: 3,
@@ -290,7 +347,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    // eğer arkası kapansın istersem bg eklemem gren buraya
     borderWidth: 1,
     borderColor: "#D0D0D0",
   },
@@ -381,31 +437,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: "#BDC3C7",
     fontWeight: "200",
-  },
-
-  // Bilgi Paneli
-  info: {
-    marginTop: 30,
-    marginHorizontal: 20,
-    padding: 20,
-    backgroundColor: "#FFF",
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  infoText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#2C3E50",
-    marginBottom: 8,
-  },
-  infoSubtext: {
-    fontSize: 14,
-    color: "#7F8C8D",
-    textAlign: "center",
   },
 });
